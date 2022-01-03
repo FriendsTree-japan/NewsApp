@@ -9,7 +9,7 @@ this is a simple News app made in Flutter and using the NewsAPI service.
 <table style="border:1px solid;">
   <tr >
     <th style="text-align: center; border:1px solid;">Main Page</th>
-    <th style="text-align: center; border:1px solid;">Detail Page</th>
+    <th style="text-align: center; border:1px solid;">Detail Page</th>  
   </tr>
   <tr >
     <td style="text-align: center; border:1px solid;padding:1em;">
