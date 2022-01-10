@@ -69,20 +69,20 @@ class HomePage extends StatelessWidget {
         });
   }
 
-  Widget _buildArticleListView(List<Article> articles) {
+  Widget _buildArticleListView(List<Article>? articles) {
     return ListView.builder(
-      itemCount: articles.length,
+      itemCount: articles!.length,
       itemBuilder: (context, index) {
         Article article = articles[index];
         return Card(
           child: ListTile(
-            title: Text(article.title, maxLines: 2),
+            title: Text(article.title.toString(), maxLines: 2),
             subtitle: Text(article.description ?? "", maxLines: 3),
             trailing: article.urlToImage == null
                 ? null
-                : Image.network(article.urlToImage),
-            onTap: () async{
-              await _manualURL(article.url);
+                : Image.network(article.urlToImage.toString()),
+            onTap: () {
+              _manualURL(article.url.toString());
             },
           ),
         );
@@ -103,14 +103,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildSourceListView(List<Source> sources) {
+  Widget _buildSourceListView(List<Source>? sources) {
     return ListView.builder(
-      itemCount: sources.length,
+      itemCount: sources!.length,
       itemBuilder: (context, index) {
         return Card(
           child: ListTile(
-            title: Text(sources[index].name),
-            subtitle: Text(sources[index].description),
+            title: Text(sources[index].name.toString()),
+            subtitle: Text(sources[index].description.toString()),
           ),
         );
       },
@@ -134,7 +134,7 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 4),
-            Text(error.message, textAlign: TextAlign.center),
+            Text(error.message.toString(), textAlign: TextAlign.center),
           ],
         ),
       ),
