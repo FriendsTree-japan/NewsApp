@@ -1,6 +1,6 @@
 //Now let's create the article details page
 
-import 'package:NewsApp/model/article_model.dart';
+import 'package:NewsApp/02_Functions/022_GetAPI/article_model.dart';
 import 'package:flutter/material.dart';
 
 class ArticlePage extends StatelessWidget {
@@ -54,7 +54,7 @@ class ArticlePage extends StatelessWidget {
               article.description,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+                fontSize: 100.0,
               ),
             )
           ],

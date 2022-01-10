@@ -1,4 +1,4 @@
-import 'package:NewsApp/model/article_model.dart';
+import 'package:NewsApp/02_Functions/022_GetAPI/article_model.dart';
 import 'package:NewsApp/pages/articles_details_page.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ Widget customListTile(Article article, BuildContext context) {
           boxShadow: [
             BoxShadow(
               color: Colors.black12,
-              blurRadius: 3.0,
+              blurRadius: 10.0,
             ),
           ]),
       child: Column(
