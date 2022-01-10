@@ -14,7 +14,6 @@ class HomePage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: _buildAppBar(),
-        body: _buildBody(),
       ),
     );
   }
