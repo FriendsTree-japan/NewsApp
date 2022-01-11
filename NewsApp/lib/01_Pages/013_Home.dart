@@ -14,22 +14,67 @@ class HomePage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: _buildAppBar(),
+        drawer: Drawer(
+        child: ListView(
+          children: <Widget>[
+            Container(
+              height: 60.0,
+              child: DrawerHeader(
+                child: Text("メニュー"),
+                decoration: BoxDecoration(),
+              ),
+            ),
+            ListTile(
+              title: Text('問い合わせ',
+                  style: TextStyle(
+                  )),
+              // onTap: _manualURL,
+            ),
+            ListTile(
+              title: Text('利用規約',
+                  style: TextStyle(
+                  )),
+              // onTap: _manualURL,
+            ),
+            ListTile(
+              title: Text('ソフトウェアライセンス',
+                  style: TextStyle(
+                  )),
+              onTap: () => showLicensePage(
+                context: context,
+                applicationName: 'NewsApp',
+                applicationVersion: '1.0.0',
+              ),
+            )
+          ],
+        ),
+        ),
       ),
     );
   }
 
   AppBar _buildAppBar() {
     return AppBar(
-      title: Text("News API Demo"),
       bottom: _buildTabBar(),
+      iconTheme: IconThemeData(color: Colors.black54),
+      backgroundColor: Colors.white,
+      actions: [
+        IconButton(
+          icon: Icon(Icons.notifications_outlined),
+          onPressed: () => {},
+        ),
+      ],
     );
   }
 
   TabBar _buildTabBar() {
     return TabBar(
+      labelColor: Colors.green,
+      unselectedLabelColor: Colors.black54,
+      indicatorColor: Colors.green,
       tabs: [
-        Tab(text: "Top Headlines"),
-        Tab(text: "Everything"),
+        Tab(text: "Work"),
+        Tab(text: "Play"),
         Tab(text: "Sources"),
       ],
     );
@@ -151,3 +196,4 @@ void _manualURL(String getUrl) async {
     throw 'Could not launch $url';
   }
 }
+
