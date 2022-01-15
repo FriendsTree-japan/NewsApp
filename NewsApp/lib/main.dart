@@ -1,7 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '01_Pages/013_Home.dart';
+import '03_FireBase/038_signin.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -10,10 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'News API Demo',
-      home: Newshome(),
+      home: SignInPage(),
     );
   }
 }
+
 
 class Newshome extends StatefulWidget {
 
