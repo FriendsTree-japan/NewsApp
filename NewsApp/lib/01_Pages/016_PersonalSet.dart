@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:NewsApp/01_Pages/013_Home.dart';
 import 'package:NewsApp/01_Pages/017_WorkSet.dart';
+import 'package:NewsApp/01_Pages/018_PlaySet.dart';
 
 class TabInfo {
   String label;
@@ -10,8 +11,8 @@ class TabInfo {
 
 class PersonalSet extends StatelessWidget {
   final List<TabInfo> _tabs = [
-    TabInfo("Work", WorkSet()),
-    TabInfo("Play", WorkSet()),
+    TabInfo("Work", PlaySet()),
+    TabInfo("Play", PlaySet()),
   ];
 
   @override

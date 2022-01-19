@@ -1,9 +1,15 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:intl/intl.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import '01_Pages/013_Home.dart';
 import '03_FireBase/038_signin.dart';
 
 void main() async{
+  _setupTimeZone();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -86,4 +92,11 @@ class _NewshomeState extends State<Newshome>
       ),
     );
   }
+}
+
+// タイムゾーンを設定する
+Future<void> _setupTimeZone() async {
+  tz.initializeTimeZones();
+  var tokyo = tz.getLocation('Asia/Tokyo');
+  tz.setLocalLocation(tokyo);
 }

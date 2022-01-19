@@ -4,6 +4,7 @@ import 'package:news_api_flutter_package/model/error.dart';
 import 'package:news_api_flutter_package/model/source.dart';
 import 'package:NewsApp/01_Pages/016_PersonalSet.dart';
 import 'package:NewsApp/01_Pages/017_WorkSet.dart';
+import 'package:NewsApp/01_Pages/018_PlaySet.dart';
 import 'package:news_api_flutter_package/news_api_flutter_package.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -127,8 +128,8 @@ class TabPage extends StatelessWidget {
             )),
         body: TabBarView(
           children: <Widget>[
-            WorkSet(),
-            WorkSet(),
+            PlaySet(),
+            PlaySet(),
           ],
         ),
       ),

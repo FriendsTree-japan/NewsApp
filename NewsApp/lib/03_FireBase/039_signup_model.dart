@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '036_convert_error_message.dart';
@@ -22,8 +23,11 @@ class SignUpModel extends ChangeNotifier {
     this.isTeamNameValid = false;
     this.isMissionValid = false;
     this.isAddressValid = false;
+    // this.userCredential = null;
     this.isGuestAllowed = false;
+    // this.teamPass = '';
     this.teamName = '';
+    // this.memberName = '';
     this.level = '';
     this.activeLocation = '';
     this.mission = '';
@@ -50,13 +54,20 @@ class SignUpModel extends ChangeNotifier {
   late bool isAddressValid;
   late UserCredential userCredential;
   late bool isGuestAllowed;
+  // late String teamPass;
   late String teamName;
+  // late String memberName;
   late String level;
   late String activeLocation;
   late String mission;
   late String address;
 
   Future<void> init() async {
+    // DocumentSnapshot _doc = await FirebaseFirestore.instance
+    //     .collection('settings')
+    //     .doc('guest_mode')
+    //     .get();
+    // this.isGuestAllowed = _doc.data()['guest_allowed'];
     notifyListeners();
   }
 
@@ -83,6 +94,9 @@ class SignUpModel extends ChangeNotifier {
       print('UserCredential が見つからないエラー');
       throw ('エラーが発生しました。');
     }
+
+    /// users コレクションにユーザーデータを保存
+  }
 
   void changeMail(text) {
     this.mail = text.trim();
@@ -192,4 +206,6 @@ class SignUpModel extends ChangeNotifier {
     if (this.password != this.confirm) {
       throw ('パスワードが一致しません。');
     }
-  }}}
+  }
+
+}
