@@ -33,13 +33,13 @@ class HomePage extends StatelessWidget {
                 title: Text('問い合わせ',
                     style: TextStyle(
                     )),
-                // onTap: _manualURL,
+                onTap: _FAQURL,
               ),
               ListTile(
                 title: Text('利用規約',
                     style: TextStyle(
                     )),
-                // onTap: _manualURL,
+                onTap: _rulesURL,
               ),
               ListTile(
                 title: Text('ソフトウェアライセンス',
@@ -197,9 +197,30 @@ class HomePage extends StatelessWidget {
   }
 }
 
+
 void _manualURL(String getUrl) async {
   print(getUrl);
   String url = getUrl;
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+void _FAQURL() async {
+  const url =
+      'https://dented-handball-204.notion.site/9fbc188c11d14c9d95fb2c959fa33043';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+void _rulesURL() async {
+  const url =
+      'https://dented-handball-204.notion.site/0fe2fc1cf0ca465abdb85616658c9106';
   if (await canLaunch(url)) {
     await launch(url);
   } else {
