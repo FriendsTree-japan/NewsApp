@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:NewsApp/main.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '031_text_daialog.dart';
 import '032_will_pop_scope.dart';
 import '038_signin.dart';
@@ -37,6 +39,14 @@ class _SignUpPageState extends State<SignUpPage> {
     mailController = widget.mailController;
     passwordController = widget.passwordController;
     confirmController = widget.confirmController;
+  }
+
+  bool _isCheck = false;
+
+  void _handleCheckbox(bool isCheck) {
+    setState(() {
+      _isCheck = isCheck;
+    });
   }
 
   @override
@@ -93,7 +103,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 16,
+                                        height: 8,
                                       ),
                                       TextFormField(
                                         controller: passwordController,
@@ -112,7 +122,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 16,
+                                        height: 8,
                                       ),
                                       TextFormField(
                                         controller: confirmController,
@@ -130,25 +140,73 @@ class _SignUpPageState extends State<SignUpPage> {
                                           border: OutlineInputBorder(),
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-
                                       Column(
                                         mainAxisAlignment:
                                         MainAxisAlignment.center,
                                         crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                         children: [
-                                          FloatingActionButton.extended(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(5), //角の丸み
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            children: [
+                                              SizedBox(
+                                                width: 24,
+                                                child: Checkbox(
+                                                  activeColor: Color(0xFF4CAF50),
+                                                  checkColor: Colors.white,
+                                                  onChanged: (val) {
+                                                    model.tapAgreeCheckBox(val);
+                                                  },
+                                                  value: model.agreeGuideline,
+                                                ),
                                               ),
-                                              label: Text('新規登録'),
-                                              backgroundColor:
-                                              const Color(0xFF4CAF50),
-                                              onPressed: () async {
-                                                try {
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Flexible(
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                    style: TextStyle(
+                                                      color: Colors.grey,
+                                                      fontSize: 12.0,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                    children: [
+                                                      TextSpan(
+                                                        text: '利用規約',
+                                                        style: TextStyle(
+                                                          color: Color(0xFF4CAF50),
+                                                          decoration: TextDecoration
+                                                              .underline,
+                                                          decorationThickness: 2.00,
+                                                        ),
+                                                        recognizer:
+                                                        TapGestureRecognizer()
+                                                          ..onTap = () {
+                                                            _SignUprulesURL();
+                                                          },
+                                                      ),
+                                                      TextSpan(
+                                                          text: ' を読んで同意しました。'),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                        ],
+                                      ),
+                                          Column(
+                                            children: [
+                                              FloatingActionButton.extended(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(5), //角の丸み
+                                                ),
+                                                label: Text('新規登録'),
+                                                backgroundColor:
+                                                const Color(0xFF4CAF50),
+                                                onPressed: model.agreeGuideline
+                                                    ? () async {
+                                                  try {
                                                     await model.signUp();
                                                     await Navigator
                                                         .pushReplacement(
@@ -160,34 +218,33 @@ class _SignUpPageState extends State<SignUpPage> {
                                                     );
                                                     model.endLoading();
                                                   } catch(e){
-                                                  showTextDialog(
-                                                      context, e);
-                                                  model.endLoading();
-                                                }}
-                                          ),
-                                          FlatButton(
-                                            child: Text(
-                                              'ログイン画面に戻る',
-                                            ),
-                                            textColor: Color(0xFF9E9E9E),
-                                            onPressed: () {
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => SignInPage(),
+                                                    showTextDialog(
+                                                        context, e);
+                                                    model.endLoading();
+                                                  }} : null,
+                                              ),
+                                              FlatButton(
+                                                child: Text(
+                                                  'ログイン画面に戻る',
                                                 ),
-                                              );
-                                            },
+                                                textColor: Color(0xFF9E9E9E),
+                                                onPressed: () {
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => SignInPage(),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
                                           ),
-
-                                        ],
-                                      ),
                                     ],
                                   ),
-                                ),
+                                ],),
                               ),
                             ),
-                          ],
+                            ),],
                         ),
                       ],
                     ),
@@ -197,5 +254,15 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
           )),
     );
+  }
+}
+
+void _SignUprulesURL() async {
+  const url =
+      'https://dented-handball-204.notion.site/0fe2fc1cf0ca465abdb85616658c9106';
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
