@@ -5,13 +5,17 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import '01_Pages/012_Setting.dart';
 import '01_Pages/013_Home.dart';
 import '03_FireBase/038_signin.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 void main() async{
   _setupTimeZone();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   runApp(MyApp());
 }
 
@@ -39,9 +43,9 @@ class _NewshomeState extends State<Newshome>
 
   List<BottomNavigationBarItem> myBottomNavBarItems() {
     return [
-      BottomNavigationBarItem(icon: Icon(Icons.home_outlined),label: "Home"),
-      BottomNavigationBarItem(icon: Icon(Icons.favorite_border_outlined),label: "Favorite"),
-      BottomNavigationBarItem(icon: Icon(Icons.settings),label: "Setting"),
+      BottomNavigationBarItem(icon: Icon(Icons.home_outlined),label: "ホーム"),
+      BottomNavigationBarItem(icon: Icon(Icons.favorite_border_outlined),label: "お気に入り"),
+      BottomNavigationBarItem(icon: Icon(Icons.settings),label: "設定"),
     ];
   }
 
@@ -72,7 +76,7 @@ class _NewshomeState extends State<Newshome>
           children: [
             HomePage(),
             HomePage(),
-            HomePage(),
+            Setting(),
           ]
       ),
 

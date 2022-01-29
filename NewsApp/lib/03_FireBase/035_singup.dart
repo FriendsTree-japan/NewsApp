@@ -49,13 +49,7 @@ class _SignUpPageState extends State<SignUpPage> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(40.0),
               child: AppBar(
-                centerTitle: true,
-                title: Text(
-                  '新規登録',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
+                backgroundColor: Colors.green,
               ),
             ),
             body: Consumer<SignUpModel>(
@@ -64,6 +58,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   children: [
                     Column(
                       children: [
+                        Padding(padding: EdgeInsets.all(70)),
                         Column(
                           children: [
                             Center(
@@ -71,8 +66,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(16.0),
                                   child: Column(
-                                    // mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          SizedBox(
+                                            width: 120,
+                                            child:
+                                            Image.asset('images/FriendsTree.png'),
+                                          ),
+                                        ],
+                                      ),
                                       TextFormField(
                                         controller: mailController,
                                         onChanged: (text) {
@@ -129,31 +133,17 @@ class _SignUpPageState extends State<SignUpPage> {
                                       SizedBox(
                                         height: 16,
                                       ),
-                                      Row(
+
+                                      Column(
                                         mainAxisAlignment:
                                         MainAxisAlignment.center,
                                         crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                         children: [
                                           FloatingActionButton.extended(
-                                            label: Text('戻る'),
-                                            backgroundColor:
-                                            const Color(0xFF9E9E9E),
-                                            onPressed: () {
-                                              Navigator.pushReplacement(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      SignInPage(),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                                10, 20, 40, 40),
-                                          ),
-                                          FloatingActionButton.extended(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(5), //角の丸み
+                                              ),
                                               label: Text('新規登録'),
                                               backgroundColor:
                                               const Color(0xFF4CAF50),
@@ -174,7 +164,22 @@ class _SignUpPageState extends State<SignUpPage> {
                                                       context, e);
                                                   model.endLoading();
                                                 }}
-                                          )
+                                          ),
+                                          FlatButton(
+                                            child: Text(
+                                              'ログイン画面に戻る',
+                                            ),
+                                            textColor: Color(0xFF9E9E9E),
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => SignInPage(),
+                                                ),
+                                              );
+                                            },
+                                          ),
+
                                         ],
                                       ),
                                     ],

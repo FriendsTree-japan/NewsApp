@@ -15,7 +15,7 @@ class ForgetPasswordPage extends StatelessWidget {
         create: (_) => ForgetPasswordModel(),
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(1.0),
+            preferredSize: Size.fromHeight(40.0),
             child: AppBar(
                 backgroundColor: Colors.green,
             ),
