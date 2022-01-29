@@ -1,7 +1,9 @@
+import 'package:NewsApp/02_Functions/FireBase.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:NewsApp/main.dart';
 import '011_Adomob.dart';
+import './../02_Functions/FireBase.dart';
 
 class Setting extends StatefulWidget {
   @override
@@ -9,8 +11,23 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  var playKeyWord1Ctl = TextEditingController();
+  var playKeyWord2Ctl = TextEditingController();
+  var playKeyWord3Ctl = TextEditingController();
+  var workKeyWord1Ctl = TextEditingController();
+  var workKeyWord2Ctl = TextEditingController();
+  var workKeyWord3Ctl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    if(FirestoreMethod.getCheck =="1"){
+      playKeyWord1Ctl = TextEditingController(text:FirestoreMethod.getPlayKeyWord1);
+      playKeyWord2Ctl = TextEditingController(text:FirestoreMethod.getPlayKeyWord2);
+      playKeyWord3Ctl = TextEditingController(text:FirestoreMethod.getPlayKeyWord3);
+      workKeyWord1Ctl = TextEditingController(text:FirestoreMethod.getWorkKeyWord1);
+      workKeyWord2Ctl = TextEditingController(text:FirestoreMethod.getWorkKeyWord2);
+      workKeyWord3Ctl = TextEditingController(text:FirestoreMethod.getWorkKeyWord3);
+    }
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
@@ -48,6 +65,7 @@ class _SettingState extends State<Setting> {
                         child: Column(
                           children: [
                             TextField(
+                              controller: workKeyWord1Ctl,
                               maxLength: 13,
                               decoration: InputDecoration(counterText: '',
                                 prefixIcon: Icon(Icons.search_rounded, color: Colors.green,),
@@ -56,6 +74,7 @@ class _SettingState extends State<Setting> {
                             ),
                             Container(padding: EdgeInsets.all(2)),
                             TextField(
+                              controller: workKeyWord2Ctl,
                               maxLength: 13,
                               decoration: InputDecoration(counterText: '',
                                 prefixIcon: Icon(Icons.search_rounded, color: Colors.green,),
@@ -64,6 +83,7 @@ class _SettingState extends State<Setting> {
                             ),
                             Container(padding: EdgeInsets.all(2)),
                             TextField(
+                              controller: workKeyWord3Ctl,
                               maxLength: 13,
                               decoration: InputDecoration(counterText: '',
                                 prefixIcon: Icon(Icons.search_rounded, color: Colors.green,),
@@ -100,6 +120,7 @@ class _SettingState extends State<Setting> {
                         child: Column(
                           children: [
                             TextField(
+                              controller: playKeyWord1Ctl,
                               maxLength: 13,
                               decoration: InputDecoration(counterText: '',
                                 prefixIcon: Icon(Icons.search_rounded, color: Colors.green,),
@@ -108,6 +129,7 @@ class _SettingState extends State<Setting> {
                             ),
                             Container(padding: EdgeInsets.all(2)),
                             TextField(
+                              controller: playKeyWord2Ctl,
                               maxLength: 13,
                               decoration: InputDecoration(counterText: '',
                                 prefixIcon: Icon(Icons.search_rounded, color: Colors.green,),
@@ -116,6 +138,7 @@ class _SettingState extends State<Setting> {
                             ),
                             Container(padding: EdgeInsets.all(2)),
                             TextField(
+                              controller: playKeyWord3Ctl,
                               maxLength: 13,
                               decoration: InputDecoration(counterText: '',
                                 prefixIcon: Icon(Icons.search_rounded, color: Colors.green,),
@@ -144,7 +167,9 @@ class _SettingState extends State<Setting> {
                     label: Text('キーワードを登録する'),
                     backgroundColor:
                     const Color(0xFF4CAF50),
-                    onPressed: (){}
+                    onPressed: () async{
+                      await FirestoreMethod.addKeyword(playKeyWord1Ctl.text,playKeyWord2Ctl.text,playKeyWord3Ctl.text,workKeyWord1Ctl.text,workKeyWord2Ctl.text,workKeyWord3Ctl.text);
+                    }
                 ),
               ],
             ),

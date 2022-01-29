@@ -1,3 +1,4 @@
+import 'package:NewsApp/02_Functions/FireBase.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '031_text_daialog.dart';
@@ -94,6 +95,8 @@ class SignInPage extends StatelessWidget {
                                   model.startLoading();
                                   try {
                                     await model.login();
+                                    await FirestoreMethod.getKeyword(model.auth.currentUser!.uid);
+                                    print(FirestoreMethod.getCheck);
                                     await Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(

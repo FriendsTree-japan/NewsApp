@@ -1,81 +1,63 @@
-// import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-//
-// class firebaseMethod {
-// //チーム情報の更新メソッド
-//   void updateTeamInfo({
-//     required String Keyword1,
-//     required String Keyword2,
-//     required String Keyword3,
-//     required String Keyword4,
-//     required String Keyword5,
-//     required String Keyword6,
-//     required String Keyword7,
-//     required String Keyword8,
-//     required String Keyword9,
-//     required String Keyword10,
-//
-//   }) {
-//     FirebaseFirestore.instance.collection('Keyword_TBL').doc(documentId).update({
-//       'Keyword1': Keyword1,
-//       'Keyword2': Keyword2,
-//       'Keyword3': Keyword3,
-//       'Keyword4': Keyword4,
-//       'Keyword5': Keyword5,
-//       'Keyword6': Keyword6,
-//       'Keyword7': Keyword7,
-//       'Keyword8': Keyword8,
-//       'Keyword9': Keyword9,
-//       'Keyword10': Keyword10,
-//     });
-//   }
-//
-// //チーム情報削除メソッド
-//   void deleteTeamInfo(String documentId) {
-//     FirebaseFirestore.instance.collection('Keyword_TBL').doc(documentId).delete();
-//   }
-//
-// //チーム情報追加メソッド
-//   Future<void> createTeamInfo(
-//       {
-//         required String Keyword1,
-//         required String Keyword2,
-//         required String Keyword3,
-//         required String Keyword4,
-//         required String Keyword5,
-//         required String Keyword6,
-//         required String Keyword7,
-//         required String Keyword8,
-//         required String Keyword9,
-//         required String Keyword10,
-//         }) async {
-//     await FirebaseFirestore.instance.collection('Keyword_TBL').add({
-//       'Keyword1': Keyword1,
-//       'Keyword2': Keyword2,
-//       'Keyword3': Keyword3,
-//       'Keyword4': Keyword4,
-//       'Keyword5': Keyword5,
-//       'Keyword6': Keyword6,
-//       'Keyword7': Keyword7,
-//       'Keyword8': Keyword8,
-//       'Keyword9': Keyword9,
-//       'Keyword10': Keyword10,
-//     });
-//   }
-//
-// //   //ログインメソッド
-//   Future<bool> teamLogin(
-//       {required String teamId, required String teamPassWord}) async {
-//     Query _query =
-//     FirebaseFirestore.instance
-//         .collection('Keyword_TBL')
-//         .where('Keyword_ID', isEqualTo: teamId);
-//     bool status = false;
-//     if(_query.get() == teamId) {
-//       status = true;
-//     }
-//     return status;
-//   }
-// }
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' as Firebase_Auth;
+
+class FirestoreMethod {
+  static FirebaseFirestore _firestoreInstance = FirebaseFirestore.instance;
+  static final userKeyWordRef = _firestoreInstance.collection(
+      'UserKeyWord');
+   static final Firebase_Auth.FirebaseAuth auth =
+      Firebase_Auth.FirebaseAuth.instance;
+  static String getCheck = "0";
+   static late String getPlayKeyWord1;
+  static late String getPlayKeyWord2;
+  static late String getPlayKeyWord3;
+  static late String getWorkKeyWord1;
+  static late String getWorkKeyWord2;
+  static late String getWorkKeyWord3;
+
+  static Future<void> addKeyword(String playKeyWord1,String playKeyWord2,String playKeyWord3,String workKeyWord1,String workKeyWord2,workKeyWord3) async {
+    try {
+      await userKeyWordRef.doc(auth.currentUser!.uid).set({
+        'USER_ID': auth.currentUser!.uid,
+        'playKeyWord1':playKeyWord1,
+        'playKeyWord2':playKeyWord2,
+        'playKeyWord3':playKeyWord3,
+        'wordKeyWord1':workKeyWord1,
+        'wordKeyWord2':workKeyWord2,
+        'wordKeyWord3':workKeyWord3,
+      });
+      getPlayKeyWord1 = playKeyWord1;
+      getPlayKeyWord2 = playKeyWord2;
+      getPlayKeyWord3 = playKeyWord3;
+      getWorkKeyWord1 = workKeyWord1;
+      getWorkKeyWord2 = workKeyWord2;
+      getWorkKeyWord3 = workKeyWord3;
+
+      getCheck ="1";
+    }
+    catch (e) {
+      print('キーワード登録に失敗しました --- $e');
+    }
+  }
+
+  static Future<void> getKeyword(String userId) async {
+    try {
+      DocumentSnapshot _KeyWordDoc = await userKeyWordRef
+          .doc('${auth.currentUser!.uid}')
+          .get();
+      getPlayKeyWord1 = _KeyWordDoc.get('playKeyWord1');
+      getPlayKeyWord2 = _KeyWordDoc.get('playKeyWord2');
+      getPlayKeyWord3 = _KeyWordDoc.get('playKeyWord3');
+      getWorkKeyWord1 = _KeyWordDoc.get('wordKeyWord1');
+      getWorkKeyWord2 = _KeyWordDoc.get('wordKeyWord2');
+      getWorkKeyWord3 = _KeyWordDoc.get('wordKeyWord3');
+      getCheck ="1";
+    }
+    catch (e) {
+      print('キーワード取得に失敗しました --- $e');
+      getCheck ="0";
+    }
+  }
+
+
+}
