@@ -101,8 +101,10 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildWorkTabView() {
+    DateTime today = DateTime.now();
+    DateTime twoDaysAgo = today.add(Duration(days: 3) * -1);
     return FutureBuilder<List<Article>>(
-        future: _newsAPI.getEverything(query: "テクノロジー"),
+        future: _newsAPI.getEverything(query: "テクノロジー",from:twoDaysAgo, to:today),
         builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
           return snapshot.connectionState == ConnectionState.done
               ? snapshot.hasData
@@ -111,10 +113,23 @@ class HomePage extends StatelessWidget {
               : _buildProgress();
         });
   }
+  // Future<List<List<Article>>> keywordNewsGet() async {
+  //   List<List<Article>> myKeyWordList = [];
+  //   List<Article> myKeyWordList1 = await _newsAPI.getEverything(query: "村上春樹");
+  //   List<Article> myKeyWordList2 = await _newsAPI.getEverything(query: "サッカー");
+  //   List<Article> myKeyWordList3 = await _newsAPI.getEverything(query: "テニス");
+  //   myKeyWordList.add(myKeyWordList1);
+  //   myKeyWordList.add(myKeyWordList2);
+  //   myKeyWordList.add(myKeyWordList3);
+  //   return myKeyWordList;
+  // }
 
   Widget _buildPlayTabView() {
+    DateTime today = DateTime.now();
+    DateTime twoDaysAgo = today.add(Duration(days: 3) * -1);
+
     return FutureBuilder<List<Article>>(
-        future: _newsAPI.getEverything(query: "村上春樹"),
+        future:  _newsAPI.getEverything(query: "サッカー",from:twoDaysAgo, to:today),
         builder: (BuildContext context, AsyncSnapshot<List<Article>> snapshot) {
           return snapshot.connectionState == ConnectionState.done
               ? snapshot.hasData
